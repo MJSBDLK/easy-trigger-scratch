@@ -288,8 +288,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -60293075
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 96493ad7f3546fb44a141e253a01cc29, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -381,7 +381,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -406,7 +406,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.047, y: -0.9489999, z: -10}
+  m_LocalPosition: {x: -7.047, y: -0.5489998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1469857736}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 3
+    OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -511,7 +511,7 @@ Transform:
   m_GameObject: {fileID: 818545687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.047, y: -0.9489999, z: -10}
+  m_LocalPosition: {x: -7.047, y: -0.5489998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -714,6 +714,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.4939544, y: 0.019001156}
   m_EdgeRadius: 0
+--- !u!1 &1158816595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158816596}
+  m_Layer: 9
+  m_Name: muzzleAir
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1158816596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158816595}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.5, y: 21, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1469857736}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395567564
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,10 +893,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300052, guid: 88d2efa31ca3e814d976be5f52978125, type: 3}
+  m_SortingLayerID: 1389270699
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300004, guid: 88d2efa31ca3e814d976be5f52978125, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -893,6 +924,8 @@ Transform:
   - {fileID: 1395567565}
   - {fileID: 209047893}
   - {fileID: 858033250}
+  - {fileID: 1158816596}
+  - {fileID: 1828782593}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1469857739
@@ -934,7 +967,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466287a9d4f15c94cad231b041ed28bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 0}
   horizontalMovement: 0
   baseGravity: 1
   baseJumpForce: 4
@@ -958,6 +990,9 @@ MonoBehaviour:
   playerIsGrounded: 0
   spriteTransform: {fileID: 209047893}
   rotationPivot: {fileID: 858033250}
+  muzzleAir: {fileID: 1158816596}
+  muzzleGround: {fileID: 1828782593}
+  projectilePrefab: {fileID: 1864098597792550627, guid: b87bd03389b09f24194988a8c953e9f1, type: 3}
 --- !u!58 &1469857741
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1028,6 +1063,37 @@ CapsuleCollider2D:
   m_Offset: {x: -0.46559572, y: 18.59312}
   m_Size: {x: 10.934567, y: 36.81376}
   m_Direction: 0
+--- !u!1 &1828782592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1828782593}
+  m_Layer: 9
+  m_Name: muzzleGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1828782593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828782592}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.5, y: 28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1469857736}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1979436974
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     // private CapsuleCollider2D capsuleCollider;
     private LayerMask playerLayerMask;
-    [SerializeField] private Transform playerSprite;
+    // [SerializeField] private Transform playerSprite;
     private Rigidbody2D rigidBody;
 
     [Header("State Variables")]
@@ -49,6 +49,17 @@ public class PlayerMovement : MonoBehaviour
     public Transform spriteTransform;
     public Transform rotationPivot;
     private Quaternion originalRotation;
+
+    [Header("Shoot")]
+    [SerializeField] private Transform muzzleAir;
+    [SerializeField] private Transform muzzleGround;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private int shotsPerBurst = 6;
+    private int shotsFiredInBurst = 0;
+    [SerializeField] private float timeBetweenShots = 0.17f;
+    [SerializeField] private float timeBetweenBursts = 1f;
+    private bool isFiring = false;
+    private bool canFire = true;
     #endregion
 
     private void Start()
@@ -114,6 +125,15 @@ public class PlayerMovement : MonoBehaviour
 
         #region Aim Input
         aimDirection = GetAimVector();
+        #endregion
+
+        #region Shoot
+        if (Input.GetButtonDown("Fire1"))
+        {
+            {
+                Shoot();
+            }
+        }
         #endregion
     }
 
@@ -257,6 +277,27 @@ public class PlayerMovement : MonoBehaviour
         if (crouching) UnCrouch();
         jumpButtonDown = false;
         animator.SetBool("isCrouching", false);
+    }
+
+    private void Shoot()
+    {
+        if (playerIsGrounded)
+        {
+            Instantiate(projectilePrefab, muzzleGround.position, muzzleGround.rotation);
+
+        }
+        else
+        {
+            Instantiate(projectilePrefab, muzzleAir.position, muzzleAir.rotation);
+
+        }
+    }
+
+    private IEnumerator BurstFire() {
+        isFiring = true;
+        while (shotsFiredInBurst < shotsPerBurst) {
+            
+        }
     }
 
     private void UnCrouch()
