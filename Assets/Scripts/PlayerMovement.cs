@@ -184,6 +184,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckFlipHorizontal() // Turn the player around
     {
+        if (!playerIsGrounded) return;
         if (((horizontalMovement < 0) && facingRight) || ((horizontalMovement > 0) && !facingRight))
         {
             facingRight = !facingRight;
@@ -281,23 +282,35 @@ public class PlayerMovement : MonoBehaviour
 
     private void Shoot()
     {
-        if (playerIsGrounded)
-        {
-            Instantiate(projectilePrefab, muzzleGround.position, muzzleGround.rotation);
-
-        }
-        else
-        {
-            Instantiate(projectilePrefab, muzzleAir.position, muzzleAir.rotation);
-
-        }
+        if (isFiring || !canFire) return;
+        StartCoroutine(BurstFire());
     }
 
-    private IEnumerator BurstFire() {
+    private IEnumerator BurstFire()
+    {
         isFiring = true;
-        while (shotsFiredInBurst < shotsPerBurst) {
-            
+        while (shotsFiredInBurst < shotsPerBurst)
+        {
+            if (playerIsGrounded)
+            {
+                Instantiate(projectilePrefab, muzzleGround.position, muzzleGround.rotation);
+
+            }
+            else
+            {
+                Instantiate(projectilePrefab, muzzleAir.position, muzzleAir.rotation);
+
+            }
+
+            shotsFiredInBurst++;
+            yield return new WaitForSeconds(timeBetweenShots);
         }
+
+        shotsFiredInBurst = 0;
+        canFire = false;
+        yield return new WaitForSeconds(timeBetweenBursts);
+        canFire = true;
+        isFiring = false;
     }
 
     private void UnCrouch()

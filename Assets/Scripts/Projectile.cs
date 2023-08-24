@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 5f;
     public int damage = 17;
     public Transform visual; // This is the child GameObject (original projectile)
 
@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour
     {
         // Assign a random rotation speed between 0 (no rotation) and 720 (2 full rotations per second)
         rotationSpeed = Random.Range(-720, 720);
+        Destroy(gameObject, 10f);
     }
 
     private void Update()
