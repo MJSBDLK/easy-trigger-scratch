@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public int health = 100;
     private float shootingCooldown = 3f; // 2 seconds cooldown after shooting
     private float lastShootTime;
-    private float groundCheckRadius = 0.6f;
+    private float groundCheckRadius = 0.6f; // Don't fuck with this
     #endregion
 
     #region State Variables
@@ -33,6 +33,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     #endregion
 
+    #region Layer Masks
+    int playerLayer;
+    #endregion
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,22 +44,31 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         bodyHurtBox = GetComponent<CapsuleCollider2D>();
         headHurtBox = GetComponent<CircleCollider2D>();
+
+        playerLayer = LayerMask.NameToLayer("Player");
     }
 
     private void FixedUpdate()
     {
+        string stateName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        Debug.Log("Animator - Current State: " + stateName);
+
+
         animator.SetFloat("horizontalVelocity", Mathf.Abs(rb.velocity.x));
         DetectPlayerAndAct();
     }
 
     private void DetectPlayerAndAct()
     {
-        // Example code for detecting the player on the same height level using a raycast
         RaycastHit2D hit = Physics2D.Raycast(muzzle.position, isFacingRight ? Vector2.right : Vector2.left, detectRange);
-        if (hit.collider != null && hit.collider.CompareTag("Player"))
+
+        if (hit.collider != null && hit.collider.gameObject.layer == playerLayer)
         {
+            Debug.Log("Player detected - EXTERMINATE");
             if (!isShooting && (Time.time > (lastShootTime + shootingCooldown)))
-            { StartCoroutine(TelegraphAndShoot()); }
+            {
+                StartCoroutine(TelegraphAndShoot());
+            }
         }
         else
         {
@@ -64,8 +77,11 @@ public class Enemy : MonoBehaviour
     }
 
 
+
     private void Walk()
     {
+        if (isShooting) return;  // Don't walk if the enemy is preparing to shoot
+
         int groundLayer = LayerMask.NameToLayer("Ground");
         int platformLayer = LayerMask.NameToLayer("OneWayPlatform");
         int walkableLayers = (1 << groundLayer) | (1 << platformLayer);
@@ -81,23 +97,28 @@ public class Enemy : MonoBehaviour
 
 
 
+
     private IEnumerator TelegraphAndShoot()
     {
         isShooting = true;
+        rb.velocity = new Vector2(0, rb.velocity.y);  // Stop horizontal movement
+
         animator.SetBool("isShooting", isShooting);
-
         animator.SetTrigger("telegraph");
-        yield return new WaitForSeconds(telegraphDuration);
-        animator.SetTrigger("shoot");
-        yield return new WaitForSeconds(shootAnimationDuration);
 
+        yield return new WaitForSeconds(telegraphDuration);
+
+        animator.SetTrigger("shoot");
         lastShootTime = Time.time; // Record the time when the enemy shot
-        // Spawn projectile etc...
+                                   // Spawn projectile etc...
         Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+
+        yield return new WaitForSeconds(shootAnimationDuration);
 
         isShooting = false;
         animator.SetBool("isShooting", isShooting);
     }
+
 
     private void Flip()
     {
