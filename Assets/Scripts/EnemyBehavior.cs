@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     #region Attributes
     [Header("Attributes")]
-    public float walkingSpeed = 2f;
+    public float walkingSpeed = 1f;
     public float detectRange = 5f;
     public float telegraphDuration = 1f;  // delay before shooting after telegraphing
     public float shootAnimationDuration = 1f;
@@ -14,12 +14,13 @@ public class Enemy : MonoBehaviour
     public int health = 100;
     private float shootingCooldown = 3f; // 2 seconds cooldown after shooting
     private float lastShootTime;
-    private float groundCheckRadius = 10f;
+    private float groundCheckRadius = 0.6f;
     #endregion
 
     #region State Variables
     private bool isFacingRight = true;
     private bool isShooting = false;
+
     #endregion
 
     #region Components
@@ -69,11 +70,7 @@ public class Enemy : MonoBehaviour
         int platformLayer = LayerMask.NameToLayer("OneWayPlatform");
         int walkableLayers = (1 << groundLayer) | (1 << platformLayer);
 
-        float scaledOffset = groundCheckRadius * transform.localScale.x;  // Adjust the offset based on scale
-        float scaledRayLength = groundCheckRadius * transform.localScale.y;  // Adjust ray length based on scale
-
-        Vector2 groundCheck = new Vector2(isFacingRight ? transform.position.x + scaledOffset : transform.position.x - scaledOffset, transform.position.y - scaledOffset);
-        RaycastHit2D groundHit = Physics2D.Raycast(groundCheck, Vector2.down, scaledRayLength, walkableLayers);
+        RaycastHit2D groundHit = Physics2D.Raycast(muzzle.position, Vector2.down, groundCheckRadius, walkableLayers);
         if (groundHit.collider == null)
         {
             Flip();
@@ -81,6 +78,7 @@ public class Enemy : MonoBehaviour
 
         rb.velocity = new Vector2(isFacingRight ? walkingSpeed : -walkingSpeed, rb.velocity.y);
     }
+
 
 
     private IEnumerator TelegraphAndShoot()
@@ -108,6 +106,7 @@ public class Enemy : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
+
 
     public void TakeDamage(int damage)
     {
@@ -142,12 +141,7 @@ public class Enemy : MonoBehaviour
     {
         // Draw floor detection raycast
         Gizmos.color = Color.yellow;
-        float scaledOffset = groundCheckRadius * transform.localScale.x;  // Adjust the offset based on scale
-        float scaledRayLength = groundCheckRadius * transform.localScale.y;  // Adjust ray length based on scale
-                                                                // int groundLayer = LayerMask.NameToLayer("Ground");
-                                                                // int platformLayer = LayerMask.NameToLayer("OneWayPlatform");
-        Vector2 groundCheck = new Vector2(isFacingRight ? transform.position.x + scaledOffset : transform.position.x - scaledOffset, transform.position.y - scaledOffset);
-        Gizmos.DrawLine(groundCheck, groundCheck + Vector2.down * scaledRayLength);
+        Gizmos.DrawLine(muzzle.position, muzzle.position + new Vector3(0, -groundCheckRadius, 0));
 
         // Draw player detection raycast
         Gizmos.color = Color.green;
@@ -155,9 +149,8 @@ public class Enemy : MonoBehaviour
         Vector2 rayDirection = isFacingRight ? Vector2.right : Vector2.left;
         Gizmos.DrawLine(rayStart, rayStart + rayDirection * detectRange);
 
-
         // Draw body hurtbox
-        // This isn't working properly but whateverh
+        // This isn't working properly but whatever
         Gizmos.color = Color.red;
         Vector3 currentScale = transform.localScale;
         if (bodyHurtBox != null)
@@ -177,9 +170,6 @@ public class Enemy : MonoBehaviour
             Gizmos.DrawLine(new Vector2(bodyPosition.x - radius, bodyPosition.y + (height / 2)), new Vector2(bodyPosition.x - radius, bodyPosition.y - (height / 2)));
             Gizmos.DrawLine(new Vector2(bodyPosition.x + radius, bodyPosition.y + (height / 2)), new Vector2(bodyPosition.x + radius, bodyPosition.y - (height / 2)));
         }
-
-
-
 
         // Draw head hurtbox
         Gizmos.color = Color.blue;
