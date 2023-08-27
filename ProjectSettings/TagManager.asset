@@ -18,7 +18,7 @@ TagManager:
   - OneWayPlatform
   - PlayerHurtBox
   - Projectile
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Level
     uniqueID: 4234674221
+    locked: 0
+  - name: Enemy
+    uniqueID: 1203025427
     locked: 0
   - name: Player
     uniqueID: 1389270699
