@@ -45,20 +45,29 @@ public class BaseProjectile : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-        string layerName = LayerMask.LayerToName(other.gameObject.layer);
+{
+    string layerName = LayerMask.LayerToName(other.gameObject.layer);
 
-        if (projectileType == ProjectileType.PlayerProjectile && layerName == "Enemy")
+    if (projectileType == ProjectileType.PlayerProjectile && layerName == "Enemy")
+    {
+        Health enemyHealth = other.GetComponent<Health>();
+        if (enemyHealth != null)
         {
-            // Apply damage to the enemy
-            Destroy(gameObject);  // Destroy the projectile
+            enemyHealth.TakeDamage(damage);
         }
-        else if (projectileType == ProjectileType.EnemyProjectile && layerName == "PlayerHurtBox")
-        {
-            // Damage the player
-            Destroy(gameObject);  // Destroy the projectile
-        }
+        Destroy(gameObject);
     }
+    else if (projectileType == ProjectileType.EnemyProjectile && layerName == "PlayerHurtBox")
+    {
+        Health playerHealth = other.GetComponent<Health>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damage);
+        }
+        Destroy(gameObject);
+    }
+}
+
 
 }
 
