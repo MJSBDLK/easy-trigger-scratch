@@ -87,8 +87,8 @@ public class PlayerMovement : MonoBehaviour
         #region Crouch Input
         // Check for down on primary axis
         float verticalAxisInput = Input.GetAxisRaw("LeftVertical");
-        // Debug.Log("verticalAxisInput " + verticalAxisInput);
-        if (verticalAxisInput < (-1 * tiltRadius)) // Don't want to detect minor tilts on control stick
+        bool crouchButtonDown = Input.GetButtonDown("CrouchLB");
+        if (verticalAxisInput < (-1 * tiltRadius) || crouchButtonDown) // Don't want to detect minor tilts on control stick
         {
             if (playerIsGrounded)
             {
@@ -294,12 +294,10 @@ public class PlayerMovement : MonoBehaviour
             if (playerIsGrounded)
             {
                 Instantiate(projectilePrefab, muzzleGround.position, muzzleGround.rotation);
-
             }
             else
             {
                 Instantiate(projectilePrefab, muzzleAir.position, muzzleAir.rotation);
-
             }
 
             shotsFiredInBurst++;
