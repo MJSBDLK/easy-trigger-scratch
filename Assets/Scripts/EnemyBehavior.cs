@@ -7,12 +7,12 @@ public class Enemy : MonoBehaviour
     [Header("Attributes")]
     public float walkingSpeed = 1f;
     public float detectRange = 5f;
-    public float telegraphDuration = 1f;  // delay before shooting after telegraphing
-    public float shootAnimationDuration = 1f;
+    public float telegraphDuration = 0.5f;  // delay before shooting after telegraphing
+    public float shootAnimationDuration = 0.6f;
     public int bodyDamage = 17;
     public int headDamage = 34;  // taking extra damage on head hit
     public int health = 100;
-    private float shootingCooldown = 3f; // 2 seconds cooldown after shooting
+    private float shootingCooldown = 0f; // X seconds cooldown after shooting
     private float lastShootTime;
     private float groundCheckRadius = 0.6f; // Don't fuck with this
     #endregion
@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
         bodyHurtBox = GetComponent<CapsuleCollider2D>();
         headHurtBox = GetComponent<CircleCollider2D>();
 
-        playerLayer = LayerMask.NameToLayer("Player");
+        playerLayer = LayerMask.NameToLayer("PlayerHurtBox");
     }
 
     private void FixedUpdate()
@@ -101,17 +101,19 @@ public class Enemy : MonoBehaviour
     private IEnumerator TelegraphAndShoot()
     {
         isShooting = true;
-        rb.velocity = new Vector2(0, rb.velocity.y);  // Stop horizontal movement
-
         animator.SetBool("isShooting", isShooting);
         animator.SetTrigger("telegraph");
+
+        rb.velocity = new Vector2(0, rb.velocity.y);  // Stop horizontal movement
 
         yield return new WaitForSeconds(telegraphDuration);
 
         animator.SetTrigger("shoot");
+        Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+
         lastShootTime = Time.time; // Record the time when the enemy shot
                                    // Spawn projectile etc...
-        Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+        Debug.Log("Kaboom");
 
         yield return new WaitForSeconds(shootAnimationDuration);
 

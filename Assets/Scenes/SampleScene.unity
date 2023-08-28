@@ -406,7 +406,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.047, y: 0.45100057, z: -10}
+  m_LocalPosition: {x: 0.271, y: 0.45800054, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -480,10 +480,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d7f1a7e04c59174b8af20991bed4b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 2
-  detectRange: 5
-  telegraphDuration: 1
-  shootAnimationDuration: 1
+  walkingSpeed: 1
+  detectRange: 3.5
+  telegraphDuration: 0.5
+  shootAnimationDuration: 0.6
   bodyDamage: 17
   headDamage: 34
   health: 100
@@ -578,7 +578,7 @@ SpriteRenderer:
   m_SortingLayerID: 1203025427
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300018, guid: fdd5aa5a8a6a84b4d8409ee379c0cbc5, type: 3}
+  m_Sprite: {fileID: 21300032, guid: fdd5aa5a8a6a84b4d8409ee379c0cbc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -598,7 +598,7 @@ Transform:
   m_GameObject: {fileID: 803235101}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.002, y: -1.952, z: 0}
+  m_LocalPosition: {x: 0.483, y: -0.827, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -740,7 +740,7 @@ Transform:
   m_GameObject: {fileID: 818545687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.047, y: 0.45100057, z: -10}
+  m_LocalPosition: {x: 0.271, y: 0.45800054, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1176,7 +1176,7 @@ Transform:
   m_GameObject: {fileID: 1469857733}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.047, y: -1.949, z: 0}
+  m_LocalPosition: {x: 0.271, y: -1.942, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1298,7 +1298,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469857733}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: f5beea9f66fec034ab52551027b4c5f4, type: 2}
   m_IncludeLayers:
