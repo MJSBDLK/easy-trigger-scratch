@@ -88,20 +88,21 @@ public class PlayerMovement : MonoBehaviour
         // Check for down on primary axis
         float verticalAxisInput = Input.GetAxisRaw("LeftVertical");
         bool crouchButtonDown = Input.GetButtonDown("Crouch");
-        if (verticalAxisInput < (-1 * tiltRadius) || crouchButtonDown) // Don't want to detect minor tilts on control stick
+        bool crouchButtonHeld = Input.GetButton("Crouch"); // Check if the "Crouch" button is being held down
+
+        if ((verticalAxisInput < (-1 * tiltRadius) || crouchButtonHeld) && playerIsGrounded) // If either "down" is being held or "Crouch" is held and player is on the ground
         {
-            if (playerIsGrounded)
-            {
-                Crouch();
-            }
-            else // if player is airborne
-            {
-                FastFall();
-            }
+            Crouch();
         }
-        else // If not inputting down
+        else if (verticalAxisInput >= (-1 * tiltRadius) && !crouchButtonDown) // If neither "down" is being held nor "Crouch"
         {
             UnCrouch();
+        }
+
+        // Fast fall code remains unchanged
+        if (verticalAxisInput < (-1 * tiltRadius) && !playerIsGrounded)
+        {
+            FastFall();
         }
         #endregion
 
@@ -293,10 +294,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if (playerIsGrounded)
             {
+                Debug.DrawRay(muzzleAir.position, Vector3.up, Color.green, 2f);
+                Debug.DrawRay(muzzleGround.position, Vector3.up, Color.red, 2f);
                 Instantiate(projectilePrefab, muzzleGround.position, muzzleGround.rotation);
             }
             else
             {
+                Debug.DrawRay(muzzleAir.position, Vector3.up, Color.green, 2f);
+                Debug.DrawRay(muzzleGround.position, Vector3.up, Color.red, 2f);
                 Instantiate(projectilePrefab, muzzleAir.position, muzzleAir.rotation);
             }
 
