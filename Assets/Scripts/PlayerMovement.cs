@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         #region Crouch Input
         // Check for down on primary axis
         float verticalAxisInput = Input.GetAxisRaw("LeftVertical");
-        bool crouchButtonDown = Input.GetButtonDown("CrouchLB");
+        bool crouchButtonDown = Input.GetButtonDown("Crouch");
         if (verticalAxisInput < (-1 * tiltRadius) || crouchButtonDown) // Don't want to detect minor tilts on control stick
         {
             if (playerIsGrounded)

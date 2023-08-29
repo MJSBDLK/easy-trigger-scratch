@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     private CapsuleCollider2D bodyHurtBox;
     private CircleCollider2D headHurtBox;
     [SerializeField] private Transform muzzle;
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject enemyProjectilePrefab;
     #endregion
 
     #region Layer Masks
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(telegraphDuration);
 
         animator.SetTrigger("shoot");
-        Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+        Instantiate(enemyProjectilePrefab, muzzle.position, muzzle.rotation);
 
         lastShootTime = Time.time; // Record the time when the enemy shot
                                    // Spawn projectile etc...
