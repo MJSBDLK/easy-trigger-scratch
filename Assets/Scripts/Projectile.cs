@@ -45,28 +45,29 @@ public class BaseProjectile : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-{
-    string layerName = LayerMask.LayerToName(other.gameObject.layer);
+    {
+        string layerName = LayerMask.LayerToName(other.gameObject.layer);
+        Vector2 hitDirection = other.transform.position - transform.position;
 
-    if (projectileType == ProjectileType.PlayerProjectile && layerName == "Enemy")
-    {
-        Health enemyHealth = other.GetComponent<Health>();
-        if (enemyHealth != null)
+        if (projectileType == ProjectileType.PlayerProjectile && layerName == "Enemy")
         {
-            enemyHealth.TakeDamage(damage);
+            Health enemyHealth = other.GetComponent<Health>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage, hitDirection.normalized);
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
-    }
-    else if (projectileType == ProjectileType.EnemyProjectile && layerName == "PlayerHurtBox")
-    {
-        Health playerHealth = other.GetComponent<Health>();
-        if (playerHealth != null)
+        else if (projectileType == ProjectileType.EnemyProjectile && layerName == "PlayerHurtBox")
         {
-            playerHealth.TakeDamage(damage);
+            Health playerHealth = other.GetComponent<Health>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damage);
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
-}
 
 
 }

@@ -131,11 +131,23 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector2 hitDirection)
     {
         health -= damage;
         if (health <= 0)
         {
+            // Not so sure about this...
+            if ((hitDirection.x > 0 && isFacingRight) || (hitDirection.x < 0 && !isFacingRight))
+            {
+                // The enemy was hit from the front
+                animator.SetTrigger("fallBackward");
+            }
+            else
+            {
+                // The enemy was hit from behind
+                animator.SetTrigger("fallForward");
+            }
+
             Die();
         }
         else
@@ -159,6 +171,26 @@ public class Enemy : MonoBehaviour
         this.enabled = false;
         rb.velocity = Vector2.zero;
     }
+
+    public void HandleDeath(Vector2 hitDirection)
+    {
+        if (Vector2.Dot(hitDirection, transform.right) > 0)
+        {
+            // The hit came from the front
+            animator.SetTrigger("fallBackward");
+        }
+        else
+        {
+            // The hit came from behind
+            animator.SetTrigger("fallForward");
+        }
+
+        StartCoroutine(FlashOnHit(Color.red));  // red on lethal damage
+                                                // disable any further behavior
+        this.enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
 
     private void OnDrawGizmos()
     {
