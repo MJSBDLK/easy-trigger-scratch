@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseProjectile : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     public enum ProjectileType { PlayerProjectile, EnemyProjectile };
 

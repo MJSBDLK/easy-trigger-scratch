@@ -112,6 +112,7 @@ MonoBehaviour:
   speed: 5
   damage: 17
   projectileType: 1
+  particleEffect: {fileID: 3695396251288594094, guid: 446d1b10cef6d414995687e1154c72d6, type: 3}
   visual: {fileID: 8458560932556129041}
 --- !u!1 &5100964947055514103
 GameObject:
