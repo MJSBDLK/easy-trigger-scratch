@@ -51,8 +51,7 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         string stateName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-        Debug.Log("Animator - Current State: " + stateName);
-
+        // Debug.Log("Animator - Current State: " + stateName);
 
         animator.SetFloat("horizontalVelocity", Mathf.Abs(rb.velocity.x));
         DetectPlayerAndAct();
@@ -64,7 +63,7 @@ public class Enemy : MonoBehaviour
 
         if (hit.collider != null && hit.collider.gameObject.layer == playerLayer)
         {
-            Debug.Log("Player detected - EXTERMINATE");
+            // Debug.Log("Player detected - EXTERMINATE");
             if (!isShooting && (Time.time > (lastShootTime + shootingCooldown)))
             {
                 StartCoroutine(TelegraphAndShoot());
@@ -109,10 +108,13 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(telegraphDuration);
 
         animator.SetTrigger("shoot");
-        Instantiate(enemyProjectilePrefab, muzzle.position, muzzle.rotation);
+
+        // Check the enemy's facing direction and set the rotation accordingly
+        Quaternion projectileRotation = isFacingRight ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
+
+        Instantiate(enemyProjectilePrefab, muzzle.position, projectileRotation);
 
         lastShootTime = Time.time; // Record the time when the enemy shot
-                                   // Spawn projectile etc...
         Debug.Log("Kaboom");
 
         yield return new WaitForSeconds(shootAnimationDuration);
@@ -120,7 +122,6 @@ public class Enemy : MonoBehaviour
         isShooting = false;
         animator.SetBool("isShooting", isShooting);
     }
-
 
     private void Flip()
     {

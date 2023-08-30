@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   damage: 17
-  projectileType: 0
+  projectileType: 1
   visual: {fileID: 8458560932556129041}
 --- !u!1 &5100964947055514103
 GameObject:

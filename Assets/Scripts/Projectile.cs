@@ -10,6 +10,7 @@ public class BaseProjectile : MonoBehaviour
     public float speed = 5f;
     public int damage = 17;
     public ProjectileType projectileType;
+    public ParticleSystem particleEffect;
 
 
     [Header("Components")]
@@ -26,6 +27,10 @@ public class BaseProjectile : MonoBehaviour
     protected virtual void InitializeProjectile()
     {
         rotationSpeed = Random.Range(-720, 720);
+        if (particleEffect != null)
+        {
+            Instantiate(particleEffect, transform.position, Quaternion.identity);
+        }
     }
 
     private void Update()
@@ -44,6 +49,14 @@ public class BaseProjectile : MonoBehaviour
         visual.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
     }
 
+    private void PlayParticleEffectOnDestroy()
+    {
+        if (particleEffect != null)
+        {
+            Instantiate(particleEffect, transform.position, Quaternion.identity);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         string layerName = LayerMask.LayerToName(other.gameObject.layer);
@@ -56,6 +69,8 @@ public class BaseProjectile : MonoBehaviour
             {
                 enemyHealth.TakeDamage(damage, hitDirection.normalized);
             }
+
+            PlayParticleEffectOnDestroy();
             Destroy(gameObject);
         }
         else if (projectileType == ProjectileType.EnemyProjectile && layerName == "PlayerHurtBox")
@@ -65,6 +80,8 @@ public class BaseProjectile : MonoBehaviour
             {
                 playerHealth.TakeDamage(damage);
             }
+
+            PlayParticleEffectOnDestroy();
             Destroy(gameObject);
         }
     }

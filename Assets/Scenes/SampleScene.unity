@@ -170,9 +170,9 @@ Transform:
   m_GameObject: {fileID: 209047891}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 135.078, y: 17.208809, z: 3.7991443}
-  m_LocalScale: {x: 50, y: 50, z: 50}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1469857736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -489,7 +489,7 @@ MonoBehaviour:
   headDamage: 34
   health: 100
   muzzle: {fileID: 955752656}
-  projectilePrefab: {fileID: 1864098597792550627, guid: b87bd03389b09f24194988a8c953e9f1, type: 3}
+  enemyProjectilePrefab: {fileID: 1864098597792550627, guid: 8e5c8ce437d8a8e47adad710295054c5, type: 3}
 --- !u!50 &803235103
 Rigidbody2D:
   serializedVersion: 4
