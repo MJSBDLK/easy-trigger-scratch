@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float timeBetweenBursts = 1f;
     private bool isFiring = false;
     private bool canFire = true;
+    [SerializeField] private float bulletSpread = 2.5f;
     #endregion
 
     private void Start()
@@ -287,17 +288,17 @@ public class PlayerMovement : MonoBehaviour
         isFiring = true;
         while (shotsFiredInBurst < shotsPerBurst)
         {
+            float randomSpread = Random.Range(-bulletSpread, bulletSpread);
+
             if (playerIsGrounded)
             {
-                Debug.DrawRay(muzzleAir.position, Vector3.up, Color.green, 2f);
-                Debug.DrawRay(muzzleGround.position, Vector3.up, Color.red, 2f);
-                Instantiate(projectilePrefab, muzzleGround.position, muzzleGround.rotation);
+                Quaternion spreadRotation = Quaternion.Euler(0, 0, randomSpread);
+                Instantiate(projectilePrefab, muzzleGround.position, muzzleGround.rotation * spreadRotation);
             }
             else
             {
-                Debug.DrawRay(muzzleAir.position, Vector3.up, Color.green, 2f);
-                Debug.DrawRay(muzzleGround.position, Vector3.up, Color.red, 2f);
-                Instantiate(projectilePrefab, muzzleAir.position, muzzleAir.rotation);
+                Quaternion spreadRotation = Quaternion.Euler(0, 0, randomSpread * 2); // Less accurate in the air
+                Instantiate(projectilePrefab, muzzleAir.position, muzzleAir.rotation * spreadRotation);
             }
 
             shotsFiredInBurst++;
@@ -310,6 +311,7 @@ public class PlayerMovement : MonoBehaviour
         canFire = true;
         isFiring = false;
     }
+
 
     private void UnCrouch()
     { // We might integrate this with the animator so it gets its own function.

@@ -1559,6 +1559,7 @@ MonoBehaviour:
   shotsPerBurst: 6
   timeBetweenShots: 0.08
   timeBetweenBursts: 0.5
+  bulletSpread: 2.5
 --- !u!58 &1469857741
 CircleCollider2D:
   m_ObjectHideFlags: 0
