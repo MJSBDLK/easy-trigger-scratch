@@ -286,6 +286,8 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator BurstFire()
     {
         isFiring = true;
+        animator.SetBool("isFiring", true);
+
         while (shotsFiredInBurst < shotsPerBurst)
         {
             float randomSpread = Random.Range(-bulletSpread, bulletSpread);
@@ -310,6 +312,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenBursts);
         canFire = true;
         isFiring = false;
+        animator.SetBool("isFiring", false);
     }
 
 
