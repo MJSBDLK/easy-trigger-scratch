@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Fast fall code remains unchanged
-        if (verticalAxisInput < (-1 * tiltRadius) && !playerIsGrounded)
+        if (verticalAxisInput < (-1 * tiltRadius) && !playerIsGrounded && rigidBody.velocity.y <= 0)
         {
             FastFall();
         }
@@ -268,7 +268,7 @@ public class PlayerMovement : MonoBehaviour
         // Debug.Log("crouching: " + crouching);
 
         float jumpMultiplier = jumpButtonDown ? fullHopForce : shortHopForce; // Jump higher if the jump button is still held.
-        if (crouching) jumpMultiplier *= 2;
+        if (crouching) jumpMultiplier *= 1.5f;
         float jumpForce = baseJumpForce * jumpMultiplier;
 
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
