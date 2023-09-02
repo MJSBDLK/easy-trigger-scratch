@@ -59,28 +59,13 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        string layerName = LayerMask.LayerToName(other.gameObject.layer);
+        Health targetHealth = other.GetComponent<Health>();
         Vector2 hitDirection = other.transform.position - transform.position;
 
-        if (projectileType == ProjectileType.PlayerProjectile && layerName == "Enemy")
+        if (targetHealth != null)
         {
-            Health enemyHealth = other.GetComponent<Health>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(damage, hitDirection.normalized);
-            }
-
-            PlayParticleEffectOnDestroy();
-            Destroy(gameObject);
-        }
-        else if (projectileType == ProjectileType.EnemyProjectile && layerName == "PlayerHurtBox")
-        {
-            Health playerHealth = other.GetComponent<Health>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-            }
-
+            // Check for friendly fire or any other condition if needed
+            targetHealth.TakeDamage(damage, hitDirection.normalized);
             PlayParticleEffectOnDestroy();
             Destroy(gameObject);
         }

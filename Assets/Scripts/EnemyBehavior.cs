@@ -135,27 +135,16 @@ public class Enemy : MonoBehaviour
         transform.localScale = scale;
     }
 
-
-    public void TakeDamage(int damage, Vector2 hitDirection)
-    {
-        if (isDead) return;
-
-        health -= damage;
-        if (health <= 0)
-        {
-            Die(hitDirection);
-        }
-        else
-        {
-            StartCoroutine(Flash(Color.white));  // white or pink when taking non-lethal damage
-        }
-    }
-
     private IEnumerator Flash(Color color, int flashCount = 5)
     {
-        spriteRenderer.color = color;
-        yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = Color.white;
+        for (int i = 0; i < flashCount; i++)
+        {
+            spriteRenderer.color = color;
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+        }
+
     }
 
     private void Die(Vector2 hitDirection)
@@ -175,16 +164,33 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("fallForward");
         }
 
-        StartCoroutine(Flash(Color.red));  // red on lethal damage
-
-        // disable any further behavior
-        StopAllCoroutines();
-        this.enabled = false;
-        bodyHurtBox.enabled = false;
-        headHurtBox.enabled = false;
-        rb.velocity = Vector2.zero;
+        // Begin fading out after flashing red
+        StartCoroutine(FadeThenDestroy());
     }
 
+    private IEnumerator FadeThenDestroy()
+    {
+        // Flash red on lethal damage
+        StartCoroutine(Flash(Color.red));
+
+        // Wait for the duration of the flash
+        yield return new WaitForSeconds(0.5f); // Assuming flash duration is 0.5 seconds
+
+        // Now begin fading out the sprite
+        float duration = 1f;
+        float elapsedTime = 0f;
+        Color originalColor = spriteRenderer.color;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1, 0, elapsedTime / duration);
+            spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        Destroy(gameObject);
+    }
 
     public void HandleDeath(Vector2 hitDirection)
     {
@@ -199,11 +205,14 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("fallForward");
         }
 
-        StartCoroutine(FlashOnHit(Color.red));  // red on lethal damage
-                                                // disable any further behavior
+        StartCoroutine(Flash(Color.red));  // red on lethal damage
+        StartCoroutine(FadeThenDestroy());  // <-- Add this line
+
+        // disable any further behavior
         this.enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
+
 
 
     private void OnDrawGizmos()

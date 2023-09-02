@@ -19,8 +19,11 @@ public class Health : MonoBehaviour
         {
             Die(hitDirection);
         }
+        else
+        {
+            // Damage feedback can be placed here, e.g., flash effect, damage sound
+        }
     }
-
 
     private void Die(Vector2 hitDirection = default)
     {
