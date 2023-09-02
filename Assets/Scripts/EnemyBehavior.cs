@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     #region State Variables
     private bool isFacingRight = true;
     private bool isShooting = false;
+    private bool isDead = false;
 
     #endregion
 
@@ -99,6 +100,8 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator TelegraphAndShoot()
     {
+        if (isDead) yield break;
+
         isShooting = true;
         animator.SetBool("isShooting", isShooting);
         animator.SetTrigger("telegraph");
@@ -112,6 +115,7 @@ public class Enemy : MonoBehaviour
         // Check the enemy's facing direction and set the rotation accordingly
         Quaternion projectileRotation = isFacingRight ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
 
+        if (isDead) yield break;
         Instantiate(enemyProjectilePrefab, muzzle.position, projectileRotation);
 
         lastShootTime = Time.time; // Record the time when the enemy shot
@@ -134,44 +138,53 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage, Vector2 hitDirection)
     {
+        if (isDead) return;
+
         health -= damage;
         if (health <= 0)
         {
-            // Not so sure about this...
-            if ((hitDirection.x > 0 && isFacingRight) || (hitDirection.x < 0 && !isFacingRight))
-            {
-                // The enemy was hit from the front
-                animator.SetTrigger("fallBackward");
-            }
-            else
-            {
-                // The enemy was hit from behind
-                animator.SetTrigger("fallForward");
-            }
-
-            Die();
+            Die(hitDirection);
         }
         else
         {
-            StartCoroutine(FlashOnHit(Color.white));  // white or pink when taking non-lethal damage
+            StartCoroutine(Flash(Color.white));  // white or pink when taking non-lethal damage
         }
     }
 
-    private IEnumerator FlashOnHit(Color color)
+    private IEnumerator Flash(Color color, int flashCount = 5)
     {
         spriteRenderer.color = color;
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = Color.white;
     }
 
-    private void Die()
+    private void Die(Vector2 hitDirection)
     {
-        animator.SetTrigger("death");
-        StartCoroutine(FlashOnHit(Color.red));  // red on lethal damage
+        if (isDead) return;
+        isDead = true;
+
+        // Determine falling direction based on hit direction
+        if (Vector2.Dot(hitDirection, transform.right) > 0)
+        {
+            // The hit came from the front
+            animator.SetTrigger("fallBackward");
+        }
+        else
+        {
+            // The hit came from behind
+            animator.SetTrigger("fallForward");
+        }
+
+        StartCoroutine(Flash(Color.red));  // red on lethal damage
+
         // disable any further behavior
+        StopAllCoroutines();
         this.enabled = false;
+        bodyHurtBox.enabled = false;
+        headHurtBox.enabled = false;
         rb.velocity = Vector2.zero;
     }
+
 
     public void HandleDeath(Vector2 hitDirection)
     {
