@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayerMask;
-    [SerializeField] private float groundedRayLength = 0.5f;
+    [SerializeField] private float groundedRayLength = 0.45f;
     [SerializeField] private LayerMask oneWayPlatformLayer;
     [SerializeField] private LayerMask playerHurtBoxLayer;
     private int playerLayerNumber;
@@ -206,15 +206,25 @@ public class PlayerMovement : MonoBehaviour
     private void CheckGrounded()
     {
         bool rayCastCheck = false;
+        Vector2 intersectionPoint = Vector2.zero; // Store intersection point
 
         if (!playerIsGrounded)
-
         {
             RaycastHit2D raycastHitGround = Physics2D.Raycast(airCheckPoint.position, Vector2.down, groundedRayLength, groundLayerMask);
             RaycastHit2D raycastHitPlatform = Physics2D.Raycast(airCheckPoint.position, Vector2.down, groundedRayLength, oneWayPlatformLayer);
 
-            if (raycastHitGround || raycastHitPlatform) rayCastCheck = true;
+            if (raycastHitGround.collider)
+            {
+                rayCastCheck = true;
+                intersectionPoint = raycastHitGround.point;
+            }
+            else if (raycastHitPlatform.collider)
+            {
+                rayCastCheck = true;
+                intersectionPoint = raycastHitPlatform.point;
+            }
         }
+
         bool groundedOnGround = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayerMask);
         bool groundedOnPlatform = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, oneWayPlatformLayer);
 
@@ -223,7 +233,15 @@ public class PlayerMovement : MonoBehaviour
         if (playerIsGrounded)
         {
             rigidBody.gravityScale = baseGravity;
+
+            // Snap player to intersection point if rayCastCheck is true
+            if (rayCastCheck)
+            {
+                // float snapYOffset = groundCheckPoint.transform.localPosition.y; // Assuming groundCheckPoint is a child of the player GameObject
+                transform.position = intersectionPoint;
+            }
         }
+
         animator.SetBool("isGrounded", playerIsGrounded);
     }
 

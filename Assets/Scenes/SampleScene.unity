@@ -1343,7 +1343,7 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  groundedRayLength: 0.5
+  groundedRayLength: 0.45
   oneWayPlatformLayer:
     serializedVersion: 2
     m_Bits: 1024
