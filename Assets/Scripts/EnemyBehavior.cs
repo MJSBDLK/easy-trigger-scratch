@@ -38,6 +38,12 @@ public class Enemy : MonoBehaviour
     int playerLayer;
     #endregion
 
+    #region Audio
+    public AudioSource deathAudioSource;  // Assign this in the inspector
+    public AudioClip[] deathSounds;  // Populate this in the inspector with your three sound effects
+
+    #endregion
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -147,27 +153,6 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void Die(Vector2 hitDirection)
-    {
-        if (isDead) return;
-        isDead = true;
-
-        // Determine falling direction based on hit direction
-        if (Vector2.Dot(hitDirection, transform.right) > 0)
-        {
-            // The hit came from the front
-            animator.SetTrigger("fallBackward");
-        }
-        else
-        {
-            // The hit came from behind
-            animator.SetTrigger("fallForward");
-        }
-
-        // Begin fading out after flashing red
-        StartCoroutine(FadeThenDestroy());
-    }
-
     private IEnumerator FadeThenDestroy()
     {
         // Flash red on lethal damage
@@ -205,6 +190,8 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("fallForward");
         }
 
+        PlayRandomDeathSound();
+
         StartCoroutine(Flash(Color.red));  // red on lethal damage
         StartCoroutine(FadeThenDestroy());  // <-- Add this line
 
@@ -213,6 +200,12 @@ public class Enemy : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
+    private void PlayRandomDeathSound()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, deathSounds.Length);
+        deathAudioSource.clip = deathSounds[randomIndex];
+        deathAudioSource.Play();
+    }
 
 
     private void OnDrawGizmos()

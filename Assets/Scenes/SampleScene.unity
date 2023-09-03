@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &151747939 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-  m_PrefabInstance: {fileID: 1473130101}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &209047891
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,71 +401,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
   m_PrefabInstance: {fileID: 5699390035302677306}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &353028684
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1655877435}
-    m_Modifications:
-    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: damageFlashColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: damageFlashColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5088205039466099861, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_Name
-      value: Enemy (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.394
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 755495768afcea24ea65a86290f609d9, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,11 +1037,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 20.211784}
   m_EdgeRadius: 0
---- !u!4 &1345036061 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-  m_PrefabInstance: {fileID: 353028684}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1395567564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,71 +1379,6 @@ MonoBehaviour:
   maxHealth: 100
   damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
---- !u!1001 &1473130101
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1655877435}
-    m_Modifications:
-    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: damageFlashColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: damageFlashColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5088205039466099861, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_Name
-      value: Enemy (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.144
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7802439854313613100, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 755495768afcea24ea65a86290f609d9, type: 3}
 --- !u!1 &1655877434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,8 +1409,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 276401135}
-  - {fileID: 1345036061}
-  - {fileID: 151747939}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1828782592
@@ -1808,14 +1666,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1655877435}
     m_Modifications:
-    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: damageFlashColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
-      propertyPath: damageFlashColor.g
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5088205039466099861, guid: 755495768afcea24ea65a86290f609d9, type: 3}
       propertyPath: m_Name
       value: Enemy
