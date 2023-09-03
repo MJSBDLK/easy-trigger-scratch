@@ -309,13 +309,18 @@ public class PlayerMovement : MonoBehaviour
         if (Vector2.Dot(hitDirection, transform.right) < 0)
         {
             // The hit came from the front
+            animator.SetBool("dead", true);
             animator.SetTrigger("dieBackward");
+
             rigidBody.AddForce(-transform.right * impulseStrength, ForceMode2D.Impulse);  // Apply force in the opposite direction of the player's right.
         }
         else
         {
             // The hit came from behind
+            animator.SetBool("dead", true);
             animator.SetTrigger("dieForward");
+
+
             rigidBody.AddForce(transform.right * impulseStrength, ForceMode2D.Impulse);  // Apply force in the direction of the player's right.
 
         }
