@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
             InstantiateParticleEffect();
         }
 
-        playRandomGunShotSound();
+        PlayRandomGunShotSound();
 
     }
 
@@ -74,14 +74,14 @@ public class Projectile : MonoBehaviour
         visual.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
     }
 
-    private void playRandomImpactSound()
+    private void PlayRandomImpactSound()
     {
         int randomIndex = UnityEngine.Random.Range(0, impactSounds.Length);
         audioSource.clip = impactSounds[randomIndex];
         audioSource.Play();
     }
 
-    private void playRandomGunShotSound()
+    private void PlayRandomGunShotSound()
     {
         int randomIndex = UnityEngine.Random.Range(0, gunShotSounds.Length);
         audioSource.clip = gunShotSounds[randomIndex];
@@ -98,7 +98,7 @@ public class Projectile : MonoBehaviour
             // Check for friendly fire or any other condition if needed
             targetHealth.TakeDamage(damage, hitDirection.normalized);
             InstantiateParticleEffect();
-            playRandomImpactSound();
+            PlayRandomImpactSound();
             Destroy(gameObject);
         }
     }

@@ -11,6 +11,10 @@ public class Health : MonoBehaviour
     private int currentHealth;
     private SpriteRenderer spriteRenderer;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] damageSounds;
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -20,6 +24,12 @@ public class Health : MonoBehaviour
     public void TakeDamage(int damageAmount, Vector2 hitDirection = default)
     {
         currentHealth -= damageAmount;
+
+        if (characterType == CharacterType.Player)
+        {
+            PlayDamageSound();
+        }
+
         if (currentHealth <= 0)
         {
             Die(hitDirection);
@@ -64,6 +74,16 @@ public class Health : MonoBehaviour
             // Play player death animation
             // Game over
             Destroy(gameObject);
+        }
+    }
+
+    public void PlayDamageSound()
+    {
+        if (damageSounds.Length > 0)
+        {
+            int randomIndex = Random.Range(0, damageSounds.Length);
+            audioSource.clip = damageSounds[randomIndex];
+            audioSource.Play();
         }
     }
 }

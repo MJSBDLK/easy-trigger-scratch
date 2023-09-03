@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("State Variables")]
     private bool facingRight = true;
     private bool crouching = false;
+    // private bool sliding = false;
     private bool haltMovement = false;
     public float horizontalMovement; // -1 | 0 | 1
     private bool jumpButtonDown;
@@ -66,6 +67,12 @@ public class PlayerMovement : MonoBehaviour
     private bool canFire = true;
     [SerializeField] private float bulletSpread = 2.5f;
     #endregion
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] deathSounds;
+    public AudioClip[] jumpSounds;
+    // public AudioClip[] slideSounds;
 
     private void Start()
     {
@@ -312,10 +319,36 @@ public class PlayerMovement : MonoBehaviour
         float jumpForce = baseJumpForce * jumpMultiplier;
 
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+
+        PlayJumpSound();
+
         if (crouching) UnCrouch();
         jumpButtonDown = false;
         animator.SetBool("isCrouching", false);
     }
+
+
+
+    public void PlayDeathSound()
+    {
+        if (deathSounds.Length > 0)
+        {
+            int randomIndex = Random.Range(0, deathSounds.Length);
+            audioSource.clip = deathSounds[randomIndex];
+            audioSource.Play();
+        }
+    }
+
+    public void PlayJumpSound()
+    {
+        if (jumpSounds.Length > 0)
+        {
+            int randomIndex = Random.Range(0, jumpSounds.Length);
+            audioSource.clip = jumpSounds[randomIndex];
+            audioSource.Play();
+        }
+    }
+
 
     private void Shoot()
     {
@@ -323,6 +356,26 @@ public class PlayerMovement : MonoBehaviour
         if (playerIsGrounded) haltMovement = true;
         StartCoroutine(BurstFire());
     }
+
+    // public void StartSlideSound()
+    // {
+    //     if (!sliding && slideSounds.Length > 0)
+    //     {
+    //         int randomIndex = Random.Range(0, slideSounds.Length);
+    //         audioSource.clip = slideSounds[randomIndex];
+    //         audioSource.Play();
+    //         sliding = true;
+    //     }
+    // }
+
+    // public void StopSlideSound()
+    // {
+    //     if (sliding)
+    //     {
+    //         audioSource.Stop();
+    //         sliding = false;
+    //     }
+    // }
 
     private IEnumerator BurstFire()
     {
