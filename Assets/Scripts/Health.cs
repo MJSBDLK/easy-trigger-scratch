@@ -11,6 +11,8 @@ public class Health : MonoBehaviour
 
     private int currentHealth;
     private SpriteRenderer spriteRenderer;
+    private Coroutine flashCoroutine;
+
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -22,7 +24,8 @@ public class Health : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public int GetCurrentHealth() {
+    public int GetCurrentHealth()
+    {
         return currentHealth;
     }
 
@@ -47,9 +50,14 @@ public class Health : MonoBehaviour
 
     private void DamageFeedback()
     {
-        // Audio here
+        // If there's an ongoing flash coroutine, stop it
+        if (flashCoroutine != null)
+        {
+            StopCoroutine(flashCoroutine);
+        }
 
-        StartCoroutine(FlashSprite());
+        // Start the flash coroutine
+        flashCoroutine = StartCoroutine(FlashSprite());
     }
 
     private System.Collections.IEnumerator FlashSprite()
