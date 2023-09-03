@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("State Variables")]
     private bool facingRight = true;
     private bool crouching = false;
+    private bool haltMovement = false;
     public float horizontalMovement; // -1 | 0 | 1
     private bool jumpButtonDown;
     private int jumpSquatCounter;
@@ -146,9 +147,9 @@ public class PlayerMovement : MonoBehaviour
         HandleOneWayPlatformCollision();
 
         #region Horizontal Movement
+        if (haltMovement) horizontalMovement = 0;
         if (!crouching) rigidBody.velocity = new Vector2(horizontalMovement * movementSpeed, rigidBody.velocity.y);
         CheckFlipHorizontal();
-        // animator.SetFloat("playerSpeed", Mathf.Abs(horizontalMovement));
         animator.SetFloat("playerSpeed", Mathf.Abs(rigidBody.velocity.x));
         #endregion
 
@@ -288,6 +289,7 @@ public class PlayerMovement : MonoBehaviour
     private void Shoot()
     {
         if (isFiring || !canFire) return;
+        if (playerIsGrounded) haltMovement = true;
         StartCoroutine(BurstFire());
     }
 
@@ -315,6 +317,7 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenShots);
         }
         animator.SetBool("isFiring", false);
+        haltMovement = false;
 
         shotsFiredInBurst = 0;
         canFire = false;
