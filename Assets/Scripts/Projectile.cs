@@ -11,16 +11,22 @@ public class Projectile : MonoBehaviour
     public int damage = 17;
     public ProjectileType projectileType;
     public ParticleSystem particleEffect;
+    protected float rotationSpeed;
 
 
     [Header("Components")]
     public Transform visual;
 
-    protected float rotationSpeed;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] gunShotSounds;
+    public AudioClip[] impactSounds;
+
 
     private void Start()
     {
         InitializeProjectile();
+
         Destroy(gameObject, 10f);
     }
 
@@ -31,10 +37,14 @@ public class Projectile : MonoBehaviour
         {
             InstantiateParticleEffect();
         }
+
+        playRandomGunShotSound();
+
     }
 
     private void InstantiateParticleEffect()
     {
+
         if (particleEffect != null)
         {
             ParticleSystem instantiatedEffect = Instantiate(particleEffect, transform.position, Quaternion.identity);
@@ -64,13 +74,19 @@ public class Projectile : MonoBehaviour
         visual.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
     }
 
-    // private void PlayParticleEffectOnDestroy()
-    // {
-    //     if (particleEffect != null)
-    //     {
-    //         Instantiate(particleEffect, transform.position, Quaternion.identity);
-    //     }
-    // }
+    private void playRandomImpactSound()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, impactSounds.Length);
+        audioSource.clip = impactSounds[randomIndex];
+        audioSource.Play();
+    }
+
+    private void playRandomGunShotSound()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, gunShotSounds.Length);
+        audioSource.clip = gunShotSounds[randomIndex];
+        audioSource.Play();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -82,6 +98,7 @@ public class Projectile : MonoBehaviour
             // Check for friendly fire or any other condition if needed
             targetHealth.TakeDamage(damage, hitDirection.normalized);
             InstantiateParticleEffect();
+            playRandomImpactSound();
             Destroy(gameObject);
         }
     }
