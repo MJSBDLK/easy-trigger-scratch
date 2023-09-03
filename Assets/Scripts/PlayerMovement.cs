@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -74,6 +75,16 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip[] jumpSounds;
     // public AudioClip[] slideSounds;
 
+    [Header("Camera")]
+    public CinemachineVirtualCamera cameraRef;
+    private CinemachineBasicMultiChannelPerlin cameraNoise;
+    private float shakeDuration = 0.3f;    // Duration of shake in seconds
+    private float shakeAmplitude = 1.2f;   // Shake amplitude
+    private float shakeFrequency = 2.0f;   // Shake frequency
+
+    private float shakeElapsedTime = 0f;
+
+
     private void Start()
     {
         #region Get Components
@@ -88,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
         // groundLayerNumber = GetLayerFromMask(groundLayerMask);
         oneWayPlatformLayerNumber = GetLayerFromMask(oneWayPlatformLayer);
         #endregion
+
+        cameraNoise = cameraRef.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         baseGravity = rigidBody.gravityScale;
         originalRotation = spriteTransform.rotation;
@@ -147,6 +160,28 @@ public class PlayerMovement : MonoBehaviour
                 Shoot();
             }
         }
+        #endregion
+
+        #region Camera Shake (on death)
+        if (cameraNoise != null)
+        {
+            // If Camera Shake effect is still playing
+            if (shakeElapsedTime > 0)
+            {
+                // Set Cinemachine Camera Noise parameters
+                cameraNoise.m_AmplitudeGain = shakeAmplitude;
+                cameraNoise.m_FrequencyGain = shakeFrequency;
+
+                shakeElapsedTime -= Time.deltaTime;
+            }
+            else
+            {
+                // If Camera Shake effect is over, reset variables
+                cameraNoise.m_AmplitudeGain = 0f;
+                shakeElapsedTime = 0f;
+            }
+        }
+
         #endregion
     }
 
@@ -258,6 +293,12 @@ public class PlayerMovement : MonoBehaviour
         // Debug.Log("Crouch");
         crouching = true;
         animator.SetBool("isCrouching", true);
+    }
+
+    public void HandleDeath(Vector2 hitDirection = default)
+    {
+        PlayDeathSound();
+        shakeElapsedTime = shakeDuration;
     }
 
     private void FastFall()

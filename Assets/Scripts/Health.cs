@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -73,7 +74,11 @@ public class Health : MonoBehaviour
         {
             // Play player death animation
             // Game over
-            Destroy(gameObject);
+            PlayerMovement pm = GetComponent<PlayerMovement>();
+            if (pm != null)
+            {
+                pm.HandleDeath(hitDirection);
+            }
         }
     }
 

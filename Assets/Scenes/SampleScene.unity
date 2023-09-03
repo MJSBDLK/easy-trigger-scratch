@@ -1315,6 +1315,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 66235f3d2fc51b742bce722b328bbf92, type: 3}
   jumpSounds:
   - {fileID: 8300000, guid: 40619d926a10e2d47b4c05ec502f1d71, type: 3}
+  cameraRef: {fileID: 818545688}
 --- !u!58 &1469857741
 CircleCollider2D:
   m_ObjectHideFlags: 0
