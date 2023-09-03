@@ -338,20 +338,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos() // For debugging
     {
         Gizmos.DrawSphere(groundCheckPoint.position, groundCheckRadius);
-        DrawArrow(muzzleGround.position, muzzleGround.right * 0.5f);  // Assuming "right" is the forward direction for shooting
-        DrawArrow(muzzleAir.position, muzzleAir.right * 0.5f);
     }
 
-    private void DrawArrow(Vector3 startPos, Vector3 direction)
-    {
-        float arrowHeadAngle = 25.0f;
-        float arrowHeadLength = 0.2f;
-
-        Vector3 rightArrow = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 + arrowHeadAngle, 0) * new Vector3(0, 0, arrowHeadLength);
-        Vector3 leftArrow = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 - arrowHeadAngle, 0) * new Vector3(0, 0, arrowHeadLength);
-
-        Gizmos.DrawRay(startPos, direction);          // Arrow shaft
-        Gizmos.DrawRay(startPos + direction, rightArrow);  // Right side of arrow head
-        Gizmos.DrawRay(startPos + direction, leftArrow);   // Left side of arrow head
-    }
 }
