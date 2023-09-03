@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
 
     private int currentHealth;
     private SpriteRenderer spriteRenderer;
-    private Coroutine flashCoroutine;
+    // private Coroutine flashCoroutine;
 
 
     [Header("Audio")]
@@ -50,22 +50,14 @@ public class Health : MonoBehaviour
 
     private void DamageFeedback()
     {
-        // If there's an ongoing flash coroutine, stop it
-        if (flashCoroutine != null)
-        {
-            StopCoroutine(flashCoroutine);
-        }
-
-        // Start the flash coroutine
-        flashCoroutine = StartCoroutine(FlashSprite());
+        StartCoroutine(FlashSprite());
     }
 
     private System.Collections.IEnumerator FlashSprite()
     {
-        Color originalColor = spriteRenderer.color;
         spriteRenderer.color = damageFlashColor;
         yield return new WaitForSeconds(flashDuration);
-        spriteRenderer.color = originalColor;
+        spriteRenderer.color = Color.white;
     }
 
     private void Die(Vector2 hitDirection = default)

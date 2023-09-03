@@ -197,6 +197,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e774faff3a11c7645ac191ee72bacd79, type: 3}
   - {fileID: 8300000, guid: 0a93f3c02d05e3e4fa28d1197beb244c, type: 3}
   - {fileID: 8300000, guid: 7b7d18f1b0af52446bc0226d71a088f9, type: 3}
+  playerRef: {fileID: 0}
 --- !u!70 &3427580506961742626
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -283,6 +284,8 @@ MonoBehaviour:
   maxHealth: 100
   damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
+  audioSource: {fileID: 6792238358074784665}
+  damageSounds: []
 --- !u!1 &9070607097793524375
 GameObject:
   m_ObjectHideFlags: 0

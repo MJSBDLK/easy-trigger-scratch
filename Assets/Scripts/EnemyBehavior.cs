@@ -149,22 +149,22 @@ public class Enemy : MonoBehaviour
         transform.localScale = scale;
     }
 
-    private IEnumerator Flash(Color color, int flashCount = 5)
-    {
-        for (int i = 0; i < flashCount; i++)
-        {
-            spriteRenderer.color = color;
-            yield return new WaitForSeconds(0.1f);
-            spriteRenderer.color = Color.white;
-            yield return new WaitForSeconds(0.1f);
-        }
+    // private IEnumerator Flash(Color color, int flashCount = 5)
+    // {
+    //     for (int i = 0; i < flashCount; i++)
+    //     {
+    //         spriteRenderer.color = color;
+    //         yield return new WaitForSeconds(0.1f);
+    //         spriteRenderer.color = Color.white;
+    //         yield return new WaitForSeconds(0.1f);
+    //     }
 
-    }
+    // }
 
     private IEnumerator FadeThenDestroy()
     {
         // Flash red on lethal damage
-        StartCoroutine(Flash(Color.red));
+        // StartCoroutine(Flash(Color.red));
 
         // Wait for the duration of the flash
         yield return new WaitForSeconds(0.5f); // Assuming flash duration is 0.5 seconds
@@ -205,7 +205,7 @@ public class Enemy : MonoBehaviour
 
         PlayRandomDeathSound();
 
-        StartCoroutine(Flash(Color.red));  // red on lethal damage
+        // StartCoroutine(Flash(Color.red));  // red on lethal damage
         StartCoroutine(FadeThenDestroy());  // <-- Add this line
 
         // disable any further behavior
