@@ -1444,6 +1444,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 0
   maxHealth: 100
+  damageFlashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  flashDuration: 0.1
 --- !u!1001 &1473130101
 PrefabInstance:
   m_ObjectHideFlags: 0
