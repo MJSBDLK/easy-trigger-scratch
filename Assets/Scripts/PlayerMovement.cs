@@ -170,6 +170,8 @@ public class PlayerMovement : MonoBehaviour
         if (!playerIsGrounded && aimDirection.magnitude > deadZone)
         {
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            if (!facingRight)
+                angle += 180; // Add an offset when facing left
             animator.transform.RotateAround(rotationPivot.position, Vector3.forward, angle - spriteTransform.rotation.eulerAngles.z);
         }
         else if (playerIsGrounded)
