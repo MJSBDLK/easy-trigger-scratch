@@ -182,14 +182,20 @@ public class PlayerMovement : MonoBehaviour
     private void CheckFlipHorizontal() // Turn the player around
     {
         if (!playerIsGrounded) return;
+
         if (((horizontalMovement < 0) && facingRight) || ((horizontalMovement > 0) && !facingRight))
         {
             facingRight = !facingRight;
             Vector3 playerScale = transform.localScale;
             playerScale.x *= -1;
             transform.localScale = playerScale;
+
+            // Flip muzzle orientations
+            muzzleAir.localEulerAngles = new Vector3(muzzleAir.localEulerAngles.x, muzzleAir.localEulerAngles.y + 180, muzzleAir.localEulerAngles.z);
+            muzzleGround.localEulerAngles = new Vector3(muzzleGround.localEulerAngles.x, muzzleGround.localEulerAngles.y + 180, muzzleGround.localEulerAngles.z);
         }
     }
+
 
     private void CheckGrounded()
     {
@@ -326,5 +332,20 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos() // For debugging
     {
         Gizmos.DrawSphere(groundCheckPoint.position, groundCheckRadius);
+        DrawArrow(muzzleGround.position, muzzleGround.right * 0.5f);  // Assuming "right" is the forward direction for shooting
+        DrawArrow(muzzleAir.position, muzzleAir.right * 0.5f);
+    }
+
+    private void DrawArrow(Vector3 startPos, Vector3 direction)
+    {
+        float arrowHeadAngle = 25.0f;
+        float arrowHeadLength = 0.2f;
+
+        Vector3 rightArrow = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 + arrowHeadAngle, 0) * new Vector3(0, 0, arrowHeadLength);
+        Vector3 leftArrow = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 - arrowHeadAngle, 0) * new Vector3(0, 0, arrowHeadLength);
+
+        Gizmos.DrawRay(startPos, direction);          // Arrow shaft
+        Gizmos.DrawRay(startPos + direction, rightArrow);  // Right side of arrow head
+        Gizmos.DrawRay(startPos + direction, leftArrow);   // Left side of arrow head
     }
 }
