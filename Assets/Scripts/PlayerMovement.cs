@@ -85,6 +85,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float shakeElapsedTime = 0f;
 
+    [Header("Scene Manager")]
+    public SceneManager sceneManager;
+
 
     private void Start()
     {
@@ -318,6 +321,7 @@ public class PlayerMovement : MonoBehaviour
         }
         PlayDeathSound();
         shakeElapsedTime = shakeDuration;
+        sceneManager.GameOver();
     }
 
     private void FastFall()

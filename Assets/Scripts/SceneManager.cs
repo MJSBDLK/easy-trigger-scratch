@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneManager : MonoBehaviour
 {
+        public GameOverScreen gameOverScreen;
+
+    
     void Update()
     {
         if (Input.GetButtonDown("Cancel"))
@@ -13,6 +16,10 @@ public class SceneManager : MonoBehaviour
             Debug.Log("Resetting...");
             ReloadScene();
         }
+    }
+
+    public void GameOver() {
+        gameOverScreen.DisplayGameOverScreen();
     }
 
     public void ReloadScene()
