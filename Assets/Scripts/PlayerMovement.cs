@@ -130,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         #region Shoot
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && !crouching)
         {
             {
                 Shoot();
@@ -314,13 +314,14 @@ public class PlayerMovement : MonoBehaviour
             shotsFiredInBurst++;
             yield return new WaitForSeconds(timeBetweenShots);
         }
+        animator.SetBool("isFiring", false);
 
         shotsFiredInBurst = 0;
         canFire = false;
         yield return new WaitForSeconds(timeBetweenBursts);
         canFire = true;
         isFiring = false;
-        animator.SetBool("isFiring", false);
+        
     }
 
 
