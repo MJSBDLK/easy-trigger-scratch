@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -35,9 +36,11 @@ public class PlayerMovement : MonoBehaviour
     public float tiltRadius = 0.6f; // This shouldn't do anything with arrow keys
 
     [Header("Grounded Check Variables")]
+    [SerializeField] private Transform airCheckPoint;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] private float groundedRayLength = 0.5f;
     [SerializeField] private LayerMask oneWayPlatformLayer;
     [SerializeField] private LayerMask playerHurtBoxLayer;
     private int playerLayerNumber;
@@ -202,10 +205,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGrounded()
     {
+        bool rayCastCheck = false;
+
+        if (!playerIsGrounded)
+
+        {
+            RaycastHit2D raycastHitGround = Physics2D.Raycast(airCheckPoint.position, Vector2.down, groundedRayLength, groundLayerMask);
+            RaycastHit2D raycastHitPlatform = Physics2D.Raycast(airCheckPoint.position, Vector2.down, groundedRayLength, oneWayPlatformLayer);
+
+            if (raycastHitGround || raycastHitPlatform) rayCastCheck = true;
+        }
         bool groundedOnGround = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayerMask);
         bool groundedOnPlatform = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, oneWayPlatformLayer);
 
-        playerIsGrounded = (groundedOnGround || groundedOnPlatform);
+        playerIsGrounded = (groundedOnGround || groundedOnPlatform || rayCastCheck);
 
         if (playerIsGrounded)
         {
@@ -324,7 +337,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenBursts);
         canFire = true;
         isFiring = false;
-        
+
     }
 
 
@@ -338,6 +351,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos() // For debugging
     {
         Gizmos.DrawSphere(groundCheckPoint.position, groundCheckRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(airCheckPoint.position, airCheckPoint.position + Vector3.down * groundedRayLength);
     }
 
 }

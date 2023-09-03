@@ -1256,7 +1256,7 @@ SpriteRenderer:
   m_SortingLayerID: 1389270699
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300004, guid: 88d2efa31ca3e814d976be5f52978125, type: 3}
+  m_Sprite: {fileID: 21300052, guid: 88d2efa31ca3e814d976be5f52978125, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1286,6 +1286,7 @@ Transform:
   - {fileID: 858033250}
   - {fileID: 1158816596}
   - {fileID: 1828782593}
+  - {fileID: 2131464942}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1469857739
@@ -1336,11 +1337,13 @@ MonoBehaviour:
   movementSpeed: 4
   deadZone: 0.1
   tiltRadius: 0.6
+  airCheckPoint: {fileID: 2131464942}
   groundCheckPoint: {fileID: 1979436975}
   groundCheckRadius: 0.1
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  groundedRayLength: 0.5
   oneWayPlatformLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -1748,6 +1751,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.4939544, y: 0.0055803657}
   m_EdgeRadius: 0
+--- !u!1 &2131464941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2131464942}
+  m_Layer: 9
+  m_Name: airCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2131464942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131464941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1469857736}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5699390035302677306
 PrefabInstance:
   m_ObjectHideFlags: 0
