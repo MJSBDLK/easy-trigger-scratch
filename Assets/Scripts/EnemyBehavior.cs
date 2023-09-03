@@ -41,9 +41,9 @@ public class Enemy : MonoBehaviour
     #region Audio
     public AudioSource deathAudioSource;  // Assign this in the inspector
     public AudioClip[] deathSounds;  // Populate this in the inspector with your three sound effects
-
     #endregion
 
+    [SerializeField] private PlayerMovement playerRef;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -57,11 +57,19 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        string stateName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-        // Debug.Log("Animator - Current State: " + stateName);
+        if (!playerRef.IsDead())
+        {
+            string stateName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+            // Debug.Log("Animator - Current State: " + stateName);
 
-        animator.SetFloat("horizontalVelocity", Mathf.Abs(rb.velocity.x));
-        DetectPlayerAndAct();
+            animator.SetFloat("horizontalVelocity", Mathf.Abs(rb.velocity.x));
+            DetectPlayerAndAct();
+
+        }
+        else
+        {
+            animator.SetTrigger("setIdle");
+        }
     }
 
     private void DetectPlayerAndAct()
@@ -122,7 +130,7 @@ public class Enemy : MonoBehaviour
         Quaternion projectileRotation = isFacingRight ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
 
         if (isDead) yield break;
-        Instantiate(enemyProjectilePrefab, muzzle.position, projectileRotation);
+        if (!isDead) Instantiate(enemyProjectilePrefab, muzzle.position, projectileRotation);
 
         lastShootTime = Time.time; // Record the time when the enemy shot
         // Debug.Log("Kaboom");
@@ -179,15 +187,20 @@ public class Enemy : MonoBehaviour
 
     public void HandleDeath(Vector2 hitDirection)
     {
-        if (Vector2.Dot(hitDirection, transform.right) > 0)
+        float impulseStrength = 1.5f;
+        if (Vector2.Dot(hitDirection, transform.right) < 0)
         {
             // The hit came from the front
             animator.SetTrigger("fallBackward");
+            rb.AddForce(-transform.right * impulseStrength, ForceMode2D.Impulse);  // not working?
+
         }
         else
         {
             // The hit came from behind
             animator.SetTrigger("fallForward");
+            rb.AddForce(transform.right * impulseStrength, ForceMode2D.Impulse);  // not working
+
         }
 
         PlayRandomDeathSound();
@@ -197,7 +210,7 @@ public class Enemy : MonoBehaviour
 
         // disable any further behavior
         this.enabled = false;
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        // GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     private void PlayRandomDeathSound()

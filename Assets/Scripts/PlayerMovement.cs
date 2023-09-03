@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidBody;
 
     [Header("State Variables")]
+    private bool dead = false;
     private bool facingRight = true;
     private bool crouching = false;
     // private bool sliding = false;
@@ -295,8 +296,26 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isCrouching", true);
     }
 
+    private void DisableControls() { enabled = false; }
+
     public void HandleDeath(Vector2 hitDirection = default)
     {
+        DisableControls();
+        dead = true;
+        float impulseStrength = 2.5f;
+        if (Vector2.Dot(hitDirection, transform.right) < 0)
+        {
+            // The hit came from the front
+            animator.SetTrigger("dieBackward");
+            rigidBody.AddForce(-transform.right * impulseStrength, ForceMode2D.Impulse);  // Apply force in the opposite direction of the player's right.
+        }
+        else
+        {
+            // The hit came from behind
+            animator.SetTrigger("dieForward");
+            rigidBody.AddForce(transform.right * impulseStrength, ForceMode2D.Impulse);  // Apply force in the direction of the player's right.
+
+        }
         PlayDeathSound();
         shakeElapsedTime = shakeDuration;
     }
@@ -349,6 +368,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Physics2D.IgnoreLayerCollision(playerLayerNumber, oneWayPlatformLayerNumber, true);
         }
+    }
+
+    public bool IsDead()
+    {
+        return dead;
     }
 
     private void Jump()

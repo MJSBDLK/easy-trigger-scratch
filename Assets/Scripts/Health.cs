@@ -22,6 +22,10 @@ public class Health : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public int GetCurrentHealth() {
+        return currentHealth;
+    }
+
     public void TakeDamage(int damageAmount, Vector2 hitDirection = default)
     {
         currentHealth -= damageAmount;

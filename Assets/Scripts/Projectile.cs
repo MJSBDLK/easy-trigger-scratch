@@ -96,9 +96,9 @@ public class Projectile : MonoBehaviour
         if (targetHealth != null)
         {
             // Check for friendly fire or any other condition if needed
-            targetHealth.TakeDamage(damage, hitDirection.normalized);
             InstantiateParticleEffect();
             PlayRandomImpactSound();
+            if (targetHealth.GetCurrentHealth() > 0) { targetHealth.TakeDamage(damage, hitDirection.normalized); }
             Destroy(gameObject);
         }
     }
