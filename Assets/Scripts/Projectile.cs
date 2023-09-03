@@ -29,7 +29,22 @@ public class Projectile : MonoBehaviour
         rotationSpeed = Random.Range(-720, 720);
         if (particleEffect != null)
         {
-            Instantiate(particleEffect, transform.position, Quaternion.identity);
+            InstantiateParticleEffect();
+        }
+    }
+
+    private void InstantiateParticleEffect()
+    {
+        if (particleEffect != null)
+        {
+            ParticleSystem instantiatedEffect = Instantiate(particleEffect, transform.position, Quaternion.identity);
+
+            // Get the main module of the particle system to access its duration.
+            ParticleSystem.MainModule mainModule = instantiatedEffect.main;
+            float particleDuration = mainModule.duration + mainModule.startLifetime.constantMax;
+
+            // Destroy the particle system after its full duration.
+            Destroy(instantiatedEffect.gameObject, particleDuration);
         }
     }
 
@@ -49,13 +64,13 @@ public class Projectile : MonoBehaviour
         visual.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
     }
 
-    private void PlayParticleEffectOnDestroy()
-    {
-        if (particleEffect != null)
-        {
-            Instantiate(particleEffect, transform.position, Quaternion.identity);
-        }
-    }
+    // private void PlayParticleEffectOnDestroy()
+    // {
+    //     if (particleEffect != null)
+    //     {
+    //         Instantiate(particleEffect, transform.position, Quaternion.identity);
+    //     }
+    // }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -66,7 +81,7 @@ public class Projectile : MonoBehaviour
         {
             // Check for friendly fire or any other condition if needed
             targetHealth.TakeDamage(damage, hitDirection.normalized);
-            PlayParticleEffectOnDestroy();
+            InstantiateParticleEffect();
             Destroy(gameObject);
         }
     }

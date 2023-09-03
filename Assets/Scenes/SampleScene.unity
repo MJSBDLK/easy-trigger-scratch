@@ -414,6 +414,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1655877435}
     m_Modifications:
+    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
+      propertyPath: damageFlashColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
+      propertyPath: damageFlashColor.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5088205039466099861, guid: 755495768afcea24ea65a86290f609d9, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1444,7 +1452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 0
   maxHealth: 100
-  damageFlashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
 --- !u!1001 &1473130101
 PrefabInstance:
@@ -1454,6 +1462,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1655877435}
     m_Modifications:
+    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
+      propertyPath: damageFlashColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
+      propertyPath: damageFlashColor.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5088205039466099861, guid: 755495768afcea24ea65a86290f609d9, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -1792,6 +1808,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1655877435}
     m_Modifications:
+    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
+      propertyPath: damageFlashColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460074924815164769, guid: 755495768afcea24ea65a86290f609d9, type: 3}
+      propertyPath: damageFlashColor.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5088205039466099861, guid: 755495768afcea24ea65a86290f609d9, type: 3}
       propertyPath: m_Name
       value: Enemy
