@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour
         Instantiate(enemyProjectilePrefab, muzzle.position, projectileRotation);
 
         lastShootTime = Time.time; // Record the time when the enemy shot
-        Debug.Log("Kaboom");
+        // Debug.Log("Kaboom");
 
         yield return new WaitForSeconds(shootAnimationDuration);
 
